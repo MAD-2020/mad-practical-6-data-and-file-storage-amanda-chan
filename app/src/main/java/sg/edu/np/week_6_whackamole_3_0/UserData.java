@@ -37,6 +37,7 @@ public class UserData {
     }
 
     public void setLevels(ArrayList<Integer> levels) {
+
         this.Levels = levels;
     }
 

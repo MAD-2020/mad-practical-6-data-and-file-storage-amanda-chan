@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Week_6_WhackAMole_3_0</string>
+    <string name="whack_a_mole">Whack A Mole!</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="new_user_click_here">New User? Click here</string>
+    <string name="create_new_user">Create New User</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
 </resources>
