@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class Main2Activity extends AppCompatActivity {
     /* Hint:
         1. This is the create new user page for user to log in
@@ -46,9 +48,19 @@ public class Main2Activity extends AppCompatActivity {
                 if(userData == null){
                     String dbUserName = etUsername.getText().toString();
                     String dbPassword = etPassword.getText().toString();
+                    ArrayList<Integer> lvlList = new ArrayList<Integer>();
+                    ArrayList<Integer> scoreList = new ArrayList<Integer>();
+                    for (int i = 1; i <= 10; i++) //init levels and scores
+                    {
+                        lvlList.add(i);
+                        scoreList.add(0);
+                    }
+
                     UserData dbUserData = new UserData();
                     dbUserData.setMyUserName(dbUserName);
                     dbUserData.setMyPassword(dbPassword);
+                    dbUserData.setLevels(lvlList);
+                    dbUserData.setScores(scoreList);
                     dbHandler.addUser(dbUserData);
                     Toast.makeText(Main2Activity.this, "New User Created!", Toast.LENGTH_SHORT).show();
                     Log.v(TAG, FILENAME + ": New user created successfully!");
@@ -60,6 +72,14 @@ public class Main2Activity extends AppCompatActivity {
                     Log.v(TAG, FILENAME + ": User already exist during new user creation!");
                 }
 
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Main2Activity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 

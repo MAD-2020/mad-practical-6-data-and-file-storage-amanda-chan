@@ -8,4 +8,7 @@
     <string name="create_new_user">Create New User</string>
     <string name="cancel">Cancel</string>
     <string name="create">Create</string>
+    <string name="pick_a_level_to_begin">Pick a level to begin!</string>
+    <string name="back_to_login">Back to Login</string>
+    <string name="back">Back</string>
 </resources>

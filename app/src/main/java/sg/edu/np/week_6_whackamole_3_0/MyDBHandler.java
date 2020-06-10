@@ -93,12 +93,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 Log.v(TAG, FILENAME + ": Adding data for Database: " + values.toString());
              */
             SQLiteDatabase db = this.getWritableDatabase();
-            for (int i = 1; i <= userData.getLevels().size(); i++){
+            for (int i = 0; i < 10; i++){
                 ContentValues values = new ContentValues();
                 values.put(COLUMN_USERNAME, userData.getMyUserName());
                 values.put(COLUMN_PASSWORD, userData.getMyPassword());
-                values.put(COLUMN_LEVEL, userData.getLevels().get(i));
-                values.put(COLUMN_SCORE, userData.getScores().get(0));
+                values.put(COLUMN_LEVEL, userData.getLevels().get(i)); //get position from array
+                values.put(COLUMN_SCORE, userData.getScores().get(i));
                 Log.v(TAG, FILENAME + ": Adding data for Database: " + values.toString());
                 db.insert(ACCOUNTS, null, values);
             }
@@ -140,15 +140,16 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst())  //move to the first row
         {
-
-            queryData.setMyUserName(cursor.getString(0));
-            queryData.setMyPassword(cursor.getString(1));
             do{
+                queryData.setMyUserName(cursor.getString(0));
+                queryData.setMyPassword(cursor.getString(1));
                 Levels.add(cursor.getInt(2)); //add levels from row to array
                 Score.add(cursor.getInt(3));//add score from row to array
             }while(cursor.moveToNext()); //move to the subsequent rows
             Log.v(TAG, FILENAME + ": QueryData: " + queryData.getLevels().toString() + queryData.getScores().toString());
             cursor.close();
+            queryData.setLevels(Levels);
+            queryData.setScores(Score);
         }
         else {
             queryData = null;

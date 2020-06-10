@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,8 +26,15 @@ public class Main3Activity extends AppCompatActivity {
             e. Each location of the mole is randomised.
         5. There is an option return to the login page.
      */
+
     private static final String FILENAME = "Main3Activity.java";
     private static final String TAG = "Whack-A-Mole3.0!";
+
+    public String GLOBAL_PREFS = "MyPrefs";
+    public String MY_USERNAME= "MyUserNAME";
+    SharedPreferences sharedPreferences;
+
+    MyDBHandler dbHandler = new MyDBHandler(this,null,null,1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,29 @@ public class Main3Activity extends AppCompatActivity {
 
         Log.v(TAG, FILENAME + ": Show level for User: "+ userName);
          */
+        Button backButton = findViewById(R.id.backButton);
+
+        sharedPreferences = getSharedPreferences(GLOBAL_PREFS, MODE_PRIVATE);
+        String userName = sharedPreferences.getString(MY_USERNAME, "");
+        Log.v(TAG, FILENAME + ": Show level for User: "+ userName);
+
+        UserData userData = dbHandler.findUser(userName);
+
+        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        final CustomScoreAdaptor customScoreAdaptor = new CustomScoreAdaptor(userData, this);
+        LinearLayoutManager pLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(pLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(customScoreAdaptor);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Main3Activity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
